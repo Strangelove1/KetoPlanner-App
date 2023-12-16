@@ -3,9 +3,11 @@ package pl.strangelove.objects.weeks;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.strangelove.objects.days.Day;
 import pl.strangelove.objects.users.User;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,4 +26,11 @@ public class Week {
     @ManyToOne
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+            name = "Weeks_Days",
+            joinColumns = @JoinColumn(name = "week_id"),
+            inverseJoinColumns = @JoinColumn(name = "day_id")
+    )
+    private List<Day> days;
 }

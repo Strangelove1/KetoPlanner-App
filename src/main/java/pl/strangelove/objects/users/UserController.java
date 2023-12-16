@@ -2,10 +2,9 @@ package pl.strangelove.objects.users;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -25,14 +24,39 @@ public class UserController {
     @PostMapping("/addUser")
     public String addUserForm(@ModelAttribute("user") User user){
         userRepository.save(user);
-        return "redirect:/userAdded";
+        return "redirect:/userAdded/" + user.getId();
     }
 
     @RequestMapping("/userAdded/{id}")
-    public String showCreatedUser(){
-
+    public String showCreatedUser(@PathVariable long id, Model model){
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            model.addAttribute("user", user);
+            return "/userAdded";
+        } else {
+            return "userNotFound";
+        }
     }
 
+    @GetMapping("/updateUser/{id}")
+    public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        model.addAttribute("user", user);
+        return "user/updateUser";
+    }
 
+    @PostMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable("id") Long id, @ModelAttribute("user") User user, Model model) {
+        userRepository.save(user);
+        model.addAttribute("user", user);
+        return "redirect:/userUpdated/" + user.getId();
+    }
 
+    @RequestMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        userRepository.delete(user);
+        return "redirect:/userDeleted";
+    }
 }

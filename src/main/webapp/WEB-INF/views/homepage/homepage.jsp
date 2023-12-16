@@ -14,5 +14,6 @@
 </head>
 <body>
 <h1>Welcome to the homepage</h1>
+<a href="ingredient/showAllIngredients"> Ingredients list</a>
 </body>
 </html>

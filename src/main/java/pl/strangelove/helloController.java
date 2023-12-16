@@ -9,11 +9,9 @@ import pl.strangelove.objects.meals.MealRepository;
 @Slf4j
 public class helloController {
 
-    private final BookRepository bookRepository;
     private final MealRepository mealRepository;
 
-    public helloController(BookRepository bookRepository, MealRepository mealRepository) {
-        this.bookRepository = bookRepository;
+    public helloController(MealRepository mealRepository) {
         this.mealRepository = mealRepository;
     }
 
@@ -21,12 +19,11 @@ public class helloController {
     @RequestMapping("/")
     public String hi(){
 
-        Book book = new Book();
-        book.getTitle();
-        Book build = Book.builder().title("thinking in Java").description("Dupa psa").build();
-        bookRepository.save(build);
-        log.info("coś tam", book.getTitle());
-        mealRepository.findAll();
+//        Book book = new Book();
+//        book.getTitle();
+//        Book build = Book.builder().title("thinking in Java").description("Dupa psa").build();
+//        log.info("coś tam", book.getTitle());
+//        mealRepository.findAll();
 
         return "homepage/homepage";
     }

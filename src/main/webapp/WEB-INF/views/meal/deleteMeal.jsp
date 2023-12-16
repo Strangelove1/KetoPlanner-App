@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: riain
-  Date: 12.12.2023
-  Time: 14:47
+  Date: 16.12.2023
+  Time: 14:21
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,8 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Witaj ${user.getName} ${user.getLastName}!</h1>
-<h1>Witaj <%= user.getName() %> <%= user.getLastName() %>!</h1>
+The meal has been deleted!
+<a href="<c:url value="/meals/list"/>"> Back to the list </a>
 
 </body>
 </html>
