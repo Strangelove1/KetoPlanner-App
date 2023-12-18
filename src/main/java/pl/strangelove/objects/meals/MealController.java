@@ -1,5 +1,6 @@
 package pl.strangelove.objects.meals;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -7,6 +8,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.strangelove.objects.ingredients.Ingredient;
 import pl.strangelove.objects.ingredients.IngredientRepository;
+import pl.strangelove.objects.users.User;
+import pl.strangelove.objects.users.UserRepository;
 
 import java.util.List;
 @Controller
@@ -14,11 +17,13 @@ import java.util.List;
 public class MealController {
     private final MealRepository mealRepository;
     private final IngredientRepository ingredientRepository;
+    private final UserRepository userRepository;
 
-    public MealController(MealRepository mealRepository, IngredientRepository ingredientRepository)
+    public MealController(UserRepository userRepository, MealRepository mealRepository, IngredientRepository ingredientRepository)
     {
         this.mealRepository = mealRepository;
         this.ingredientRepository = ingredientRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/mealDetails/{id}")
@@ -30,8 +35,10 @@ public class MealController {
     }
 
     @GetMapping("/list")
-    public String getAllMeals(Model model) {
-        List<Meal> mealList = mealRepository.findAll();
+    public String getAllMeals(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        int adminId = user.getId();
+        List<Meal> mealList = mealRepository.findMealsByUser_Id(adminId);
         model.addAttribute("meals", mealList);
         return "meal/list";
     }

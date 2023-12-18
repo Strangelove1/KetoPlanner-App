@@ -1,0 +1,4 @@
+1. Dokończyć session data.
+2. Testować stronę klienta.
+3. Sprawdzić czy dane Usera się zapisują przy dodawaniu klientów (ważne)!
+3. Zrobić stylowanie.

@@ -15,14 +15,15 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/addUser")
+    @GetMapping("/registerUser")
     public String showAddUserForm(Model model){
         model.addAttribute("user", new User());
-        return "user/addUser";
+        return "registerUser";
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/registerUser")
     public String addUserForm(@ModelAttribute("user") User user){
+        user.setEnable(0);
         userRepository.save(user);
         return "redirect:/userAdded/" + user.getId();
     }
@@ -48,8 +49,8 @@ public class UserController {
 
     @PostMapping("/updateUser/{id}")
     public String updateUser(@PathVariable("id") Long id, @ModelAttribute("user") User user, Model model) {
-        userRepository.save(user);
         model.addAttribute("user", user);
+        userRepository.save(user);
         return "redirect:/userUpdated/" + user.getId();
     }
 
@@ -59,4 +60,5 @@ public class UserController {
         userRepository.delete(user);
         return "redirect:/userDeleted";
     }
+
 }

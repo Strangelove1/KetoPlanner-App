@@ -1,5 +1,7 @@
 package pl.strangelove.objects.days;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,7 @@ import pl.strangelove.objects.dayNames.DayNameRepository;
 import pl.strangelove.objects.ingredients.Ingredient;
 import pl.strangelove.objects.meals.Meal;
 import pl.strangelove.objects.meals.MealRepository;
+import pl.strangelove.objects.users.User;
 import pl.strangelove.objects.weeks.WeekRepository;
 
 import java.time.LocalDate;
@@ -31,18 +34,21 @@ public class DayController {
     }
 
     @GetMapping("/list")
-    public String getAllDays(Model model) {
-        List<Day> dayList = dayRepository.findAll();
+    public String getAllDays(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        int adminId = user.getId();
+        List<Day> dayList = dayRepository.findDaysByUser_Id(adminId);
         model.addAttribute("days", dayList);
         return "day/list";
     }
 
     @GetMapping("/create")
-    public String createDay(Model model) {
+    public String createDay(Model model, HttpSession session) {
         Day day = new Day();
-
+        User user = (User) session.getAttribute("user");
+        int adminId = user.getId();
         // Retrieve the list of available meals
-        List<Meal> allMeals = mealRepository.findAll();
+        List<Meal> allMeals = mealRepository.findMealsByUser_Id(adminId);
 
         // Set the initial meals for the day (you can adjust this based on your requirements)
         day.setMeals(allMeals);
