@@ -77,12 +77,14 @@ public class DayController {
 
 
     @PostMapping("/create")
-    public String saveDay(@ModelAttribute @Validated Day day, BindingResult bindingResult) {
+    public String saveDay(@ModelAttribute @Validated Day day, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "day/addDay";
         }
         LocalDate localDate = LocalDate.now();
         day.setCreated(localDate);
+        User user = (User) session.getAttribute("user");
+        day.setUser(user);
         dayRepository.save(day);
         return "redirect:/days/list";
     }
@@ -103,9 +105,10 @@ public class DayController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateDay(@PathVariable Long id, @ModelAttribute Day day) {
+    public String updateDay(@PathVariable Long id, @ModelAttribute Day day, HttpSession session) {
         Day dayToUpdate = dayRepository.findById(id).orElse(null);
         LocalDate localDate = LocalDate.now();
+        User user = (User) session.getAttribute("user");
 
         if (dayToUpdate != null) {
             calculateAndSetDayTotals(day);

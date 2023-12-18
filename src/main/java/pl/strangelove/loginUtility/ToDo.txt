@@ -1,4 +1,5 @@
-1. Dokończyć session data.
-2. Testować stronę klienta.
-3. Sprawdzić czy dane Usera się zapisują przy dodawaniu klientów (ważne)!
-3. Zrobić stylowanie.
+1. Sprawdzić session data input. (Chyba całe zrobione.)
+2. Naprawić 500tki z bibliotek z Arkiem i testować stronę klienta.
+3. Sprawdzić czy dane User_Id się zapisują przy dodawaniu obiektów klientów (ważne)!
+4. Dodać strony do usuwania.
+5. Zrobić stylowanie/homepage.

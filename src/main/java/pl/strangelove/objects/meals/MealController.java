@@ -51,12 +51,13 @@ public class MealController {
     }
 
     @PostMapping("/create")
-    public String saveMeal(@ModelAttribute @Validated Meal meal, BindingResult bindingResult) {
+    public String saveMeal(@ModelAttribute @Validated Meal meal, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()){
             return "meal/addMeal";
         }
         calculateAndSetMealTotals(meal);
-
+        User user = (User) session.getAttribute("user");
+        meal.setUser(user);
         mealRepository.save(meal);
         return "redirect:/meal/list";
     }

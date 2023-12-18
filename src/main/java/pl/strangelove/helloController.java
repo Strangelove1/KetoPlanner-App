@@ -25,7 +25,7 @@ public class helloController {
 //        log.info("coś tam", book.getTitle());
 //        mealRepository.findAll();
 
-        return "dashboard";
+        return "homepage/dashboard";
     }
 
 }

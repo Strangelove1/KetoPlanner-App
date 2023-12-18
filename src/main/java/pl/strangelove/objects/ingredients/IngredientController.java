@@ -40,7 +40,7 @@ public class IngredientController {
     public String editIngredient(@PathVariable Long id, Model model) {
         Ingredient ingredient = ingredientRepository.findById(id).orElse(null);
         model.addAttribute("ingredient", ingredient);
-        return "ingredient/editIngredient";
+        return "ingredient/updateIngredient";
     }
 
     @PostMapping("/editIngredient/{id}")
