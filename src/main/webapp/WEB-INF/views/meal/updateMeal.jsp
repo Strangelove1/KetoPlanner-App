@@ -28,6 +28,9 @@
     </script>
 </head>
 <body>
+
+<h2>Edit meal</h2>
+
 <form:form method="post" modelAttribute="updatemeal">
     <table id="ingredientTable">
         <tr>
@@ -44,7 +47,7 @@
         <tr>
             <td><form:label path="ingredientsList"> List of ingredients </form:label></td>
             <td><form:select path="ingredientsList" items="${ingredients}" itemLabel="name" itemValue="id">  </form:select>
-                <form:errors path="description"/></td>
+                <form:errors path="ingredientsList"/></td>
         </tr>
     </table>
     <button type="button" id="addIngredient">Add another ingredient</button>

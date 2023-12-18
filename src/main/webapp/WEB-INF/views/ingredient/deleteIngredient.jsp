@@ -12,8 +12,10 @@
 </head>
 <body>
 <h2>
-The ingredient has been deleted!
-    <a href="<c:url value="/ingredients/showAllIngredients"/>"> Back to the list </a>
+    The ingredient has been deleted!
+    <br>
 </h2>
+<a href="<c:url value="/ingredients/showAllIngredients"/>"> Back to the list </a>
+
 </body>
 </html>

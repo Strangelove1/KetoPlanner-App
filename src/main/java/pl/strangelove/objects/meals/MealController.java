@@ -9,8 +9,6 @@ import pl.strangelove.objects.ingredients.Ingredient;
 import pl.strangelove.objects.ingredients.IngredientRepository;
 
 import java.util.List;
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/meals")
 public class MealController {
@@ -50,19 +48,21 @@ public class MealController {
         if (bindingResult.hasErrors()){
             return "meal/addMeal";
         }
+        calculateAndSetMealTotals(meal);
+
         mealRepository.save(meal);
         return "redirect:/meal/list";
     }
 
-    @GetMapping("/editMeal/{id}")
+    @GetMapping("/updateMeal/{id}")
     public String editIngredient(@PathVariable Long id, Model model) {
        Meal meal = mealRepository.findById(id).orElse(null);
         model.addAttribute("updatemeal", meal);
         model.addAttribute("ingredients", ingredientRepository.findAll());
-        return "meal/editMeal";
+        return "meal/updateMeal";
     }
 
-    @PostMapping("/editMeal/{id}")
+    @PostMapping("/updateMeal/{id}")
     public String updateMeal(@PathVariable Long id, @ModelAttribute Meal meal) {
         Meal mealToUpdate = mealRepository.findById(id).orElse(null);
 
@@ -73,6 +73,8 @@ public class MealController {
             mealToUpdate.setCarbohydrates(meal.getCarbohydrates());
             mealToUpdate.setUser(meal.getUser());
             mealToUpdate.setIngredientsList(meal.getIngredientsList());
+            calculateAndSetMealTotals(mealToUpdate);
+
             mealRepository.save(mealToUpdate);
 
         }
@@ -83,5 +85,19 @@ public class MealController {
     public String deleteMeal(@PathVariable Long id) {
         mealRepository.deleteById(id);
         return "redirect:/meal/list";
+    }
+
+    // Method for counting carb and kcal totals from ingredients in each meal
+    private void calculateAndSetMealTotals(Meal meal) {
+        int totalKcal = 0;
+        int totalCarbohydrates = 0;
+
+        for (Ingredient ingredient : meal.getIngredientsList()) {
+            totalKcal += ingredient.getKcal();
+            totalCarbohydrates += ingredient.getCarbohydrates();
+        }
+
+        meal.setKcal(totalKcal);
+        meal.setCarbohydrates(totalCarbohydrates);
     }
 }

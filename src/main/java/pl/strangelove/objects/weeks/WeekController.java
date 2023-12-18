@@ -1,5 +1,6 @@
 package pl.strangelove.objects.weeks;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -7,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.strangelove.objects.days.DayRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -21,56 +23,58 @@ public class WeekController {
         this.weekRepository = weekRepository;
     }
 
-    @GetMapping("/showAllWeeks")
+    @GetMapping("/list")
     public String getAllWeeks(Model model) {
         List<Week> weekList = weekRepository.findAll();
         model.addAttribute("weeks", weekList);
-        return "weeks/list";
+        return "week/list";
     }
 
     @GetMapping("/create")
     public String createWeek(Model model) {
         model.addAttribute("week", new Week());
         model.addAttribute("days", dayRepository.findAll());
-        return "weeks/create";
+        return "week/addWeek";
     }
 
     @PostMapping("/create")
     public String saveWeek(@ModelAttribute @Validated Week week, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "week/add";
+            return "week/addWeek";
         }
+        LocalDate localDate = LocalDate.now();
+        week.setCreated(localDate);
         weekRepository.save(week);
-        return "redirect:/weeks/showAllWeeks";
+        return "redirect:/weeks/list";
     }
 
-    @GetMapping("/editWeek/{id}")
+    @GetMapping("/updateWeek/{id}")
     public String editWeek(Model model, @PathVariable Long id){
         Week week = weekRepository.findById(id).orElse(null);
         model.addAttribute("week", week);
         model.addAttribute("days", weekRepository.findAll());
-        return "week/editWeek";
+        return "week/updateWeek";
     }
 
-    @PostMapping("/editWeek/{id}")
+    @PostMapping("/updateWeek/{id}")
     public String updateWeek(@ModelAttribute Week week, @PathVariable Long id ){
         Week weekToUpdate = weekRepository.findById(id).orElse(null);
-
+        LocalDate localDate = LocalDate.now();
         if (weekToUpdate != null){
             weekToUpdate.setWeekName(week.getWeekName());
             weekToUpdate.setDays(week.getDays());
             weekToUpdate.setUser(week.getUser());
             weekToUpdate.setId(week.getId());
-            weekToUpdate.setCreated(week.getCreated());
+            weekToUpdate.setCreated(localDate);
             weekRepository.save(weekToUpdate);
         }
-        return "redirect:/week/list";
+        return "redirect:/weeks/list";
     }
 
     @GetMapping("/deleteWeek/{id}")
     public String deleteWeek(@PathVariable Long id){
         weekRepository.deleteById(id);
-        return "redirect/week/list";
+        return "redirect:/weeks/list";
     }
 
 

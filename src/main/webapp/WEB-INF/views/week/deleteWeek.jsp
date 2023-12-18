@@ -11,6 +11,11 @@
     <title>Title</title>
 </head>
 <body>
+The week was deleted from the database!
+<br>
+<a href="<c:url value="/weeks/list"/>"> Back to the list </a>
+
+
 
 </body>
 </html>

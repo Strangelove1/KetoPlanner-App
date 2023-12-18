@@ -11,6 +11,9 @@
     <title>Title</title>
 </head>
 <body>
+The day was deleted from the database!
+<br>
+<a href="<c:url value="/meals/list"/>"> Back to the list </a>
 
 </body>
 </html>

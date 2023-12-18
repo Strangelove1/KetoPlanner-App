@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<h2>Add User</h2>
+<h2>Register User</h2>
 
 <form action="/addUser" method="post">
     <label for="name">Name:</label>
@@ -30,7 +30,7 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br>
 
-    <input type="submit" value="Add User">
+    <input type="submit" value="Register user">
 </form>
 
 </body>

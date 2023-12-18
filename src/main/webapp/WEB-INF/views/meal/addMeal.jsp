@@ -28,22 +28,26 @@
     </script>
 </head>
 <body>
+
+<h2>Add meal</h2>
+
 <form:form method="post" modelAttribute="meal">
     <table id="ingredientTable">
         <tr>
             <td><form:label path="name"> Name </form:label></td>
-            <td><form:input path="name"/></td>
-            <td><form:errors path="name"/></td>
+            <td><form:input path="name"/>
+                <form:errors path="name"/></td>
         </tr>
         <tr>
             <td><form:label path="description"> Description </form:label></td>
-            <td><form:input path="description"/></td>
-            <td><form:errors path="description"/></td>
+            <td><form:input path="description"/>
+                <form:errors path="description"/></td>
         </tr>
 
         <tr>
             <td><form:label path="ingredientsList"> List of ingredients </form:label></td>
-            <td><form:select path="ingredientsList" items="${ingredients}" itemLabel="name" itemValue="id">  </form:select></td>
+            <td><form:select path="ingredientsList" items="${ingredients}" itemLabel="name" itemValue="id">  </form:select>
+            <form:errors path="ingredientsList"/></td>
         </tr>
     </table>
     <button type="button" id="addIngredient">Add another ingredient</button>

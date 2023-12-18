@@ -12,7 +12,5 @@
 </head>
 <body>
 <h1>Witaj ${user.getName} ${user.getLastName}!</h1>
-<h1>Witaj <%= user.getName() %> <%= user.getLastName() %>!</h1>
-
 </body>
 </html>
