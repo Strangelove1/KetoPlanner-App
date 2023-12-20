@@ -6,7 +6,8 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/days/create"> Add meal </a>
+<a href="/days/create"> Add day </a>
+<a href="/"> Dashboard </a>
 <table>
     <tr>
         <td>ID</td>
@@ -19,16 +20,16 @@
     <c:forEach items="${days}" var="day">
         <tr>
             <td>${day.id}</td>
-            <td>${day.dayNames}</td>
+            <td>${day.dayNames.name}</td>
             <td>${day.kcal}</td>
             <td>${day.carbohydrates}</td>
             <td>${day.ketoFriendly}</td>
             <td>${day.created}</td>
 
             <td>
-                <a href="<c:url value="/day/editDay/${day.id}"/>"> Edit </a>
-                <a href="<c:url value="/day/deleteDay/${day.id}"/>"> Delete </a>
-                <a href="<c:url value="/day/dayDetails/${day.id}"/>"> Details </a>
+                <a href="<c:url value="/days/updateDay/${day.id}"/>"> Edit </a>
+                <a href="<c:url value="/days/deleteDay/${day.id}"/>"> Delete </a>
+                <a href="<c:url value="/days/dayDetails/${day.id}"/>"> Details </a>
             </td>
         </tr>
     </c:forEach>

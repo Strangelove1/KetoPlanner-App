@@ -10,13 +10,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Edit Day</title>
+    <title>Create Day</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         // Function to update total Kcal and Carbohydrates
         function updateTotals() {
             // Send an AJAX request to get the updated values from the server
-            $.get("/days/calculateTotals", { mealIds: $("#meals").val() }, function(data) {
+            $.get("/days/calculateTotals", {mealIds: $("#meals").val()}, function (data) {
                 // Update the view with the new values
                 $("#totalKcal").text(data.totalKcal);
                 $("#totalCarbohydrates").text(data.totalCarbohydrates);
@@ -24,44 +24,41 @@
         }
 
         // Attach the updateTotals function to the change event of the Meals select
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#meals").change(updateTotals);
         });
     </script>
 </head>
 <body>
 
-<h2>Edit day</h2>
+<h2>Update Day</h2>
 
 <form:form method="post" modelAttribute="day">
     <table>
         <tr>
             <td>Week:</td>
-            <td><form:select path="week.id">
-                <form:option value="" label="-- Select Week --" />
-                <form:options items="${weeks}" itemValue="id" itemLabel="weekName" />
+            <td><form:select path="weeks" multiple="true">
+                <form:option value="" label="-- Select Week --"/>
+                <form:options items="${weeks}" itemValue="id" itemLabel="weekName"/>
             </form:select></td>
         </tr>
         <tr>
             <td>Day Name:</td>
-            <td><form:select path="dayNames.id">
-                <form:option value="" label="-- Select Day Name --" />
-                <form:options items="${dayNames}" itemValue="id" itemLabel="name" />
+            <td><form:select path="dayNames">
+                <form:option value="" label="-- Select Day Name --"/>
+                <form:options items="${dayNames}" itemValue="id" itemLabel="name"/>
             </form:select></td>
         </tr>
-        <tr>
-            <td>Created:</td>
-            <td><form:input path="created" type="date" /></td>
-        </tr>
+
         <tr>
             <td>Meals:</td>
             <td><form:select path="meals" multiple="true" id="meals">
-                <form:options items="${meals}" itemValue="id" itemLabel="name" />
+                <form:options items="${meals}" itemValue="id" itemLabel="name"/>
             </form:select></td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Edit Day" />
+                <input type="submit" value="Create Day"/>
             </td>
         </tr>
         <tr>

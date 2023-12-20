@@ -24,14 +24,14 @@
                 <form:errors path="weekName"/></td>
         </tr>
 
-        <tr>
-            <td>Days:</td>
-            <td><form:select path="days" multiple="true">
-                <form:option value="" label="-- Select days --"/>
-                <form:options items="${days}" itemValue="id" itemLabel="dayName"/>
-            </form:select>
-                <form:errors path="days"/></td>
-        </tr>
+<%--        <tr>--%>
+<%--            <td>Days:</td>--%>
+<%--            <td><form:select path="days" multiple="true">--%>
+<%--                <form:option value="" label="-- Select days --"/>--%>
+<%--                <form:options items="${days}" itemValue="id" itemLabel="dayName"/>--%>
+<%--            </form:select>--%>
+<%--                <form:errors path="days"/></td>--%>
+<%--        </tr>--%>
         <tr>
             <td colspan="2">
                 <input type="submit" value="Create Week"/>

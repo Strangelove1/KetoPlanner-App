@@ -24,7 +24,7 @@ public class Day {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    private Week week;
+    private Week weeks;
     @ManyToOne
     private DayNames dayNames;
     private int kcal;

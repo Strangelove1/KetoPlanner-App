@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@RequestMapping("/user")
 @Controller
 public class UserController {
 
@@ -18,25 +19,24 @@ public class UserController {
     @GetMapping("/registerUser")
     public String showAddUserForm(Model model){
         model.addAttribute("user", new User());
-        return "registerUser";
+        return "/user/registerUser";
     }
 
     @PostMapping("/registerUser")
     public String addUserForm(@ModelAttribute("user") User user){
         user.setEnable(0);
         userRepository.save(user);
-        return "redirect:/userAdded/" + user.getId();
+        return "redirect:/user/userAdded/" + user.getId();
     }
 
     @RequestMapping("/userAdded/{id}")
     public String showCreatedUser(@PathVariable long id, Model model){
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
             model.addAttribute("user", user);
-            return "/userAdded";
+            return "user/userAdded";
         } else {
-            return "userNotFound";
+            return "user/userNotFound";
         }
     }
 
@@ -58,7 +58,7 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         userRepository.delete(user);
-        return "redirect:/userDeleted";
+        return "redirect:/user/userDeleted";
     }
 
 }

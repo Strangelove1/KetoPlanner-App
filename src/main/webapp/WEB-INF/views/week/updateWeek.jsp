@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Create Week</title>
+    <title>Update Week</title>
 </head>
 <body>
 
@@ -25,16 +25,8 @@
         </tr>
 
         <tr>
-            <td>Days:</td>
-            <td><form:select path="days" multiple="true">
-                <form:option value="" label="-- Select days --"/>
-                <form:options items="${days}" itemValue="id" itemLabel="dayName"/>
-            </form:select>
-                <form:errors path="days"/></td>
-        </tr>
-        <tr>
             <td colspan="2">
-                <input type="submit" value="Create Week"/>
+                <input type="submit" value="Update Week"/>
             </td>
         </tr>
     </table>

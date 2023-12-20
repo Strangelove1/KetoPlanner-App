@@ -37,23 +37,19 @@
     <table>
         <tr>
             <td>Week:</td>
-            <td><form:select path="week.id">
+            <td><form:select path="weeks" multiple="true">
                 <form:option value="" label="-- Select Week --"/>
                 <form:options items="${weeks}" itemValue="id" itemLabel="weekName"/>
             </form:select></td>
         </tr>
         <tr>
             <td>Day Name:</td>
-            <td><form:select path="dayNames.id">
+            <td><form:select path="dayNames">
                 <form:option value="" label="-- Select Day Name --"/>
                 <form:options items="${dayNames}" itemValue="id" itemLabel="name"/>
             </form:select></td>
         </tr>
-        <tr>
-            <td>Created:</td>
-            <td><form:input path="created" type="date"/>
-                <form:errors path="created"/></td>
-        </tr>
+
         <tr>
             <td>Meals:</td>
             <td><form:select path="meals" multiple="true" id="meals">

@@ -12,9 +12,10 @@
     <title>Title</title>
 </head>
 <body>
-<a href="<c:url value="/meal/list"/>"> Back to the list </a>
-
+<a href="<c:url value="/meals/list"/>"> Back to the list </a>
+<br>
 Meal details:
+<br>
 <table>
     <tr>
         <td>ID</td>
@@ -24,7 +25,7 @@ Meal details:
         <td>Carbohydrates</td>
         <td>Weight</td>
     </tr>
-    <c:forEach items="ingredientsList" var="ingredient">
+    <c:forEach items="${ingredientList}" var="ingredient">
     <tr>
         <td>${ingredient.id}</td>
         <td>${ingredient.name}</td>
@@ -33,7 +34,7 @@ Meal details:
         <td>${ingredient.carbohydrates}</td>
         <td>${ingredient.weight}</td>
     </tr>
-</table>
 </c:forEach>
+</table>
 </body>
 </html>

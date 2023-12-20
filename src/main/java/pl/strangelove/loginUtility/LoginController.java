@@ -8,12 +8,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.strangelove.objects.users.User;
 import pl.strangelove.objects.users.UserRepository;
 
-import java.util.Optional;
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
     private final UserRepository userRepository;
@@ -36,21 +37,21 @@ public class LoginController {
         // (You can use annotations like @Email, @NotBlank, etc., on the LoginForm class)
 
         if (bindingResult.hasErrors()) {
-            return "login";
+            return "user/loginUser";
         }
 
         // Perform user authentication (you might want to use Spring Security for this)
         // For simplicity, let's assume a basic authentication mechanism
-        Optional<User> user = userRepository.findByEmailAndPassword(loginForm.getEmail(), loginForm.getPassword());
+        User user = userRepository.findByEmailAndPassword(loginForm.getEmail(), loginForm.getPassword());
 
         if (user != null) {
             // Successful login
             session.setAttribute("user", user);
-            return "redirect:/dashboard"; // Redirect to a dashboard or home page
+            return "redirect:/"; // Redirect to a dashboard or home page
         } else {
             // Failed login
             bindingResult.rejectValue("email", "error.loginForm", "Invalid email or password");
-            return "login";
+            return "/user/userNotFound";
         }
     }
 }

@@ -11,30 +11,16 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var rowCount = 1;
 
-            $("#addIngredient").click(function () {
-                var newRow = '<tr>' +
-                    '<td><form:label path="ingredientsList' + rowCount + '"> List of ingredients </form:label></td>' +
-                    '<td><form:select path="ingredientsList' + rowCount + '" items="${ingredients}" itemLabel="name" itemValue="id">  </form:select></td>' +
-                    '</tr>';
-                $("#ingredientTable").append(newRow);
-                rowCount++;
-            });
-        });
-    </script>
 </head>
 <body>
 
-<h2>Edit meal</h2>
+<h2>Add meal</h2>
 
-<form:form method="post" modelAttribute="updatemeal">
+<form:form method="post" modelAttribute="meal">
     <table id="ingredientTable">
         <tr>
-            <td><form:label path="name"> Edit Name </form:label></td>
+            <td><form:label path="name"> Name </form:label></td>
             <td><form:input path="name"/>
                 <form:errors path="name"/></td>
         </tr>
@@ -45,12 +31,14 @@
         </tr>
 
         <tr>
-            <td><form:label path="ingredientsList"> List of ingredients </form:label></td>
-            <td><form:select path="ingredientsList" items="${ingredients}" itemLabel="name" itemValue="id">  </form:select>
+            <td>Choose ingredients</td>
+            <td><form:select path="ingredientsList" multiple="true">
+                <form:option value="" label="-- Select ingredients --"/>
+                <form:options items="${ingredients}" itemValue="id" itemLabel="name"/>
+            </form:select>
                 <form:errors path="ingredientsList"/></td>
         </tr>
     </table>
-    <button type="button" id="addIngredient">Add another ingredient</button>
     <input type="submit" value="submit">
 </form:form>
 

@@ -4,6 +4,9 @@ package pl.strangelove.objects.dayNames;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -16,6 +19,9 @@ public class DayNames {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int order;
+    private int orderDay;
     private String name;
+
+
+
 }

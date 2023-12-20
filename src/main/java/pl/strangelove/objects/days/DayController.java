@@ -33,6 +33,14 @@ public class DayController {
         this.weekRepository = weekRepository;
     }
 
+    @GetMapping("/dayDetails/{id}")
+    public String showDayDetails(Model model, @PathVariable Long id){
+        Day day = dayRepository.findById(id).orElse(null);
+        List<Meal> mealList = day.getMeals();
+        model.addAttribute("mealList", mealList);
+        return "day/dayDetails";
+    }
+
     @GetMapping("/list")
     public String getAllDays(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -85,6 +93,8 @@ public class DayController {
         day.setCreated(localDate);
         User user = (User) session.getAttribute("user");
         day.setUser(user);
+        calculateAndSetDayTotals(day);
+        checkAndSetKetoFriendlyStatus(day);
         dayRepository.save(day);
         return "redirect:/days/list";
     }
@@ -104,7 +114,7 @@ public class DayController {
         return "day/updateDay";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/updateDay/{id}")
     public String updateDay(@PathVariable Long id, @ModelAttribute Day day, HttpSession session) {
         Day dayToUpdate = dayRepository.findById(id).orElse(null);
         LocalDate localDate = LocalDate.now();
@@ -120,8 +130,8 @@ public class DayController {
             dayToUpdate.setMeals(day.getMeals());
             dayToUpdate.setCarbohydrates(day.getCarbohydrates());
             dayToUpdate.setCreated(localDate);
-            dayToUpdate.setWeek(day.getWeek());
-            dayToUpdate.setUser(day.getUser());
+            dayToUpdate.setWeeks(day.getWeeks());
+            dayToUpdate.setUser(user);
 
             dayRepository.save(dayToUpdate);
         }
@@ -154,7 +164,7 @@ public class DayController {
         day.setKetoFriendly(totalCarbohydrates < 40);
     }
 
-    @GetMapping("/days/calculateTotals")
+    @GetMapping("/calculateTotals")
     public TotalsResponse calculateTotals(@RequestParam("mealIds") List<Long> mealIds) {
         int totalKcal = 0;
         int totalCarbohydrates = 0;

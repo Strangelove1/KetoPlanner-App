@@ -59,40 +59,41 @@ public class MealController {
         User user = (User) session.getAttribute("user");
         meal.setUser(user);
         mealRepository.save(meal);
-        return "redirect:/meal/list";
+        return "redirect:/meals/list";
     }
 
     @GetMapping("/updateMeal/{id}")
     public String editIngredient(@PathVariable Long id, Model model) {
        Meal meal = mealRepository.findById(id).orElse(null);
-        model.addAttribute("updatemeal", meal);
+        model.addAttribute("meal", meal);
         model.addAttribute("ingredients", ingredientRepository.findAll());
         return "meal/updateMeal";
     }
 
     @PostMapping("/updateMeal/{id}")
-    public String updateMeal(@PathVariable Long id, @ModelAttribute Meal meal) {
+    public String updateMeal(@PathVariable Long id, @ModelAttribute Meal meal, HttpSession session) {
         Meal mealToUpdate = mealRepository.findById(id).orElse(null);
+        User user = (User) session.getAttribute("user");
 
         if (mealToUpdate != null){
             mealToUpdate.setName(meal.getName());
             mealToUpdate.setDescription(meal.getDescription());
             mealToUpdate.setKcal(mealToUpdate.getKcal());
             mealToUpdate.setCarbohydrates(meal.getCarbohydrates());
-            mealToUpdate.setUser(meal.getUser());
+            mealToUpdate.setUser(user);
             mealToUpdate.setIngredientsList(meal.getIngredientsList());
             calculateAndSetMealTotals(mealToUpdate);
 
             mealRepository.save(mealToUpdate);
 
         }
-        return "redirect:/meal/list";
+        return "redirect:/meals/list";
     }
 
     @GetMapping("/deleteMeal/{id}")
     public String deleteMeal(@PathVariable Long id) {
         mealRepository.deleteById(id);
-        return "redirect:/meal/list";
+        return "redirect:/meals/list";
     }
 
     // Method for counting carb and kcal totals from ingredients in each meal

@@ -13,6 +13,7 @@
 </head>
 <body>
 <a href="<c:url value="/ingredient/create"/>"> add ingredient</a>
+<a href="/"> Dashboard </a>
 <table>
     <tr>
         <td>ID</td>
