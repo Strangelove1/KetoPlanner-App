@@ -32,7 +32,7 @@ Meal details:
         <td>${ingredient.description}</td>
         <td>${ingredient.kcal}</td>
         <td>${ingredient.carbohydrates}</td>
-        <td>${ingredient.weight}</td>
+        <td>${ingredient.weight} g</td>
     </tr>
 </c:forEach>
 </table>

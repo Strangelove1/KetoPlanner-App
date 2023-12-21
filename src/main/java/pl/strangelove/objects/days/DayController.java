@@ -55,7 +55,6 @@ public class DayController {
         Day day = new Day();
         User user = (User) session.getAttribute("user");
         int adminId = user.getId();
-        // Retrieve the list of available meals
         List<Meal> allMeals = mealRepository.findMealsByUser_Id(adminId);
 
         // Set the initial meals for the day (you can adjust this based on your requirements)
@@ -159,7 +158,6 @@ public class DayController {
     }
 
     private void checkAndSetKetoFriendlyStatus(Day day) {
-        // Check if the sum of carbohydrates is below 40 to set keto-friendly status
         int totalCarbohydrates = day.getCarbohydrates();
         day.setKetoFriendly(totalCarbohydrates < 40);
     }
